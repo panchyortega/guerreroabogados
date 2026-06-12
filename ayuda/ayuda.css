@@ -884,3 +884,20 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   line-height: 1.7;
   margin-bottom: 2rem;
 }
+
+/* ==========================================
+   SUBCATEGORÍAS en página de categoría
+   ========================================== */
+.cat-subcat-title {
+  font-family: var(--font-body);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-top: 2rem;
+  margin-bottom: .75rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--warm-grey);
+}
+.cat-subcat-title:first-child { margin-top: 0; }

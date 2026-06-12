@@ -1,0 +1,38 @@
+name: Publicar artículos desde Google Sheet
+
+on:
+  # Corre cuando se hace push a main
+  push:
+    branches: [main]
+  # Permite correrlo manualmente desde GitHub
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install requests markdown
+
+      - name: Construir artículos desde Google Sheet
+        run: python scripts/build_articles.py
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+
+      - name: Commit y push si hay cambios
+        run: |
+          git config user.name "Guerrero Abogados Bot"
+          git config user.email "bot@guerreroabogados.cl"
+          git add ayuda/
+          git diff --staged --quiet || git commit -m "📝 Artículos actualizados desde Google Sheet"
+          git push

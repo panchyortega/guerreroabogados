@@ -419,7 +419,7 @@ def main():
         if row.get("publicado", "").strip().upper() != "SI":
             continue
         cat = row.get("categoria", "").lower().strip()
-        if cat not in CATEGORIES:
+        if cat not in active_categories:
             print(f"⚠️  Categoría desconocida '{cat}', saltando fila")
             continue
         title = row.get("titulo", "").strip()

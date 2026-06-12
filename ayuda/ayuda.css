@@ -465,6 +465,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
 }
 
 /* Sidebar */
+.article-layout > aside { display: none; }
 .sidebar-box {
   background: var(--navy);
   border-radius: var(--radius-md);
@@ -507,11 +508,11 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
    ========================================== */
 .article-layout {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  max-width: 740px;
+  margin-inline: auto;
   padding-block: clamp(2.5rem, 5vw, 4rem);
   padding-inline: clamp(1.25rem, 5vw, 3rem);
-  align-items: start;
 }
 .article-content {}
 .article-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--warm-grey); }
@@ -545,9 +546,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   word-break: break-word;
 }
 .article-body h2 {
-  font-family: var(--font-display);
-  font-size: 1.1875rem;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--navy);
   margin-top: 2rem;
   margin-bottom: .6rem;
@@ -590,8 +591,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   text-align: center;
 }
 .article-cta__title {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--navy);
   margin-bottom: .5rem;
 }
@@ -675,7 +677,8 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   .help-categories__grid { grid-template-columns: repeat(2, 1fr); }
   .cat-layout, .article-layout { grid-template-columns: 1fr; }
   .cat-layout__sidebar, .article-layout > aside { order: 1; }
-  .sidebar-box { position: static; }
+  .article-layout > aside { display: none; }
+.sidebar-box { position: static; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__brand { grid-column: 1 / -1; }
 }
@@ -717,7 +720,8 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   }
 
   /* Sidebar compact on mobile */
-  .sidebar-box {
+  .article-layout > aside { display: none; }
+.sidebar-box {
     position: static;
     padding: 1.25rem;
   }

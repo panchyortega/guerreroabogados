@@ -363,50 +363,59 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   border-color: rgba(46,95,172,.2);
 }
 .service-card--wide {
-  grid-column: 1 / -1;
-}
-.service-card--wide .service-card__list--cols {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: .3rem;
+  /* same size as other cards — no full-width span */
 }
 .service-card__icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   color: var(--blue);
 }
 .service-card__icon svg { width: 100%; height: 100%; }
+
+/* Title: Inter semi-bold, navy */
 .service-card__title {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--navy);
   line-height: 1.3;
 }
+
+/* Desc + list: same size as cta button (.8125rem), muted */
 .service-card__desc {
-  font-size: .875rem;
+  font-family: var(--font-body);
+  font-size: .8125rem;
   color: var(--text-muted);
-  line-height: 1.55;
+  line-height: 1.6;
 }
 .service-card__list {
+  font-family: var(--font-body);
   font-size: .8125rem;
-  color: var(--text-body);
+  color: var(--text-muted);
   display: flex;
   flex-direction: column;
-  gap: .3rem;
+  gap: .25rem;
   flex: 1;
 }
+.service-card__list li {
+  display: flex;
+  align-items: baseline;
+  gap: .45rem;
+}
 .service-card__list li::before {
-  content: '—';
+  content: '·';
   color: var(--blue-light);
-  margin-right: .5rem;
+  font-size: 1.1em;
+  flex-shrink: 0;
+  line-height: 1;
 }
 .service-card__cta {
+  font-family: var(--font-body);
   font-size: .8125rem;
   font-weight: 500;
   color: var(--blue);
   margin-top: .25rem;
-  transition: color var(--transition), gap var(--transition);
+  transition: color var(--transition);
   display: inline-block;
 }
 .service-card__cta:hover { color: var(--navy-mid); }
@@ -771,8 +780,6 @@ a.contact__info-value:hover { color: var(--off-white); }
   .hero__title-animated { font-size: clamp(2.25rem, 7vw, 3.5rem); }
 
   .services__grid { grid-template-columns: repeat(2, 1fr); }
-  .service-card--wide { grid-column: 1 / -1; }
-
   .diff__grid { grid-template-columns: repeat(2, 1fr); }
 
   .seo-section__inner { grid-template-columns: 1fr; gap: 2rem; }
@@ -790,8 +797,6 @@ a.contact__info-value:hover { color: var(--off-white); }
 /* Mobile */
 @media (max-width: 600px) {
   .services__grid { grid-template-columns: 1fr; }
-  .service-card--wide .service-card__list--cols { grid-template-columns: 1fr; }
-
   .diff__grid { grid-template-columns: 1fr; }
 
   .footer__grid { grid-template-columns: 1fr; gap: 2rem; }

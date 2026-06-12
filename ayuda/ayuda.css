@@ -675,6 +675,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
 
 /* Search bar — variante sobre fondo beige */
 .help-search--inline {
+  border: 1.5px solid #D1CCC4;
   background: #fff;
   border-color: var(--warm-grey);
 }

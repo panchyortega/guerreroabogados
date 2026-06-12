@@ -373,12 +373,8 @@ def fetch_categories():
     try:
         resp = urllib.request.urlopen(SHEET_URL_CATEGORIES)
         resp_text = resp.read().decode("utf-8")
-        resp_status = resp.status
     except Exception as e:
         print(f"❌ Error leyendo Categorías: {e}")
-        sys.exit(1)
-    if resp.status_code != 200:
-        print(f"❌ Error leyendo Categorías: HTTP {resp.status_code}")
         sys.exit(1)
 
     import csv, io

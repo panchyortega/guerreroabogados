@@ -22,7 +22,7 @@ jobs:
           python-version: '3.11'
 
       - name: Instalar dependencias
-        run: pip install requests
+        run: pip install requests markdown
 
       - name: Construir artículos desde Google Sheet
         run: python scripts/build_articles.py

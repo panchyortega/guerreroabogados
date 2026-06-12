@@ -16,6 +16,7 @@ Columnas del Sheet (fila 1 = encabezados):
 
 import os, re, json, sys, unicodedata
 import requests
+import urllib.request
 # using built-in markdown parser
 
 # ── Configuración ──────────────────────────────────────────────────────────────
@@ -369,18 +370,19 @@ def rebuild_ayuda_index(active_categories, by_cat):
 def fetch_categories():
     """Fetch categories from the second sheet tab. Falls back to CATEGORIES default."""
     print("📥 Descargando categorías desde Sheet...")
-    resp = requests.get(SHEET_URL_CATEGORIES)
+    try:
+        resp = urllib.request.urlopen(SHEET_URL_CATEGORIES)
+        resp_text = resp.read().decode("utf-8")
+        resp_status = resp.status
+    except Exception as e:
+        print(f"❌ Error leyendo Categorías: {e}")
+        sys.exit(1)
     if resp.status_code != 200:
         print(f"❌ Error leyendo Categorías: HTTP {resp.status_code}")
-        print(f"   URL: {SHEET_URL_CATEGORIES}")
         sys.exit(1)
 
-    # Load categories from sheet (or fall back to defaults)
-    dynamic_cats = fetch_categories()
-    active_categories = dynamic_cats if dynamic_cats else CATEGORIES
-
     import csv, io
-    reader = csv.DictReader(io.StringIO(resp.text))
+    reader = csv.DictReader(io.StringIO(resp_text))
     cats = {}
     for row in reader:
         row = {k.strip().lower(): v.strip() for k, v in row.items()}
@@ -400,9 +402,11 @@ def fetch_categories():
 
 def main():
     print("📥 Descargando Sheet...")
-    resp = requests.get(SHEET_URL_ARTICLES)
-    if resp.status_code != 200:
-        print(f"❌ Error descargando Sheet: {resp.status_code}")
+    try:
+        resp_obj = urllib.request.urlopen(SHEET_URL_ARTICLES)
+        resp_text_arts = resp_obj.read().decode("utf-8")
+    except Exception as e:
+        print(f"❌ Error descargando Sheet: {e}")
         sys.exit(1)
 
     # Load categories from sheet (or fall back to defaults)
@@ -410,7 +414,7 @@ def main():
     active_categories = dynamic_cats if dynamic_cats else CATEGORIES
 
     import csv, io
-    reader = csv.DictReader(io.StringIO(resp.text))
+    reader = csv.DictReader(io.StringIO(resp_text_arts))
 
     # Normalize column names (strip spaces, lowercase)
     articles = []

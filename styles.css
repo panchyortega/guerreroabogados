@@ -366,11 +366,17 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   /* same size as other cards — no full-width span */
 }
 .service-card__icon {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  background: rgba(46,95,172,.08);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--blue);
+  flex-shrink: 0;
 }
-.service-card__icon svg { width: 100%; height: 100%; }
+.service-card__icon svg { width: 22px; height: 22px; }
 
 /* Title: Inter semi-bold, navy */
 .service-card__title {
@@ -495,22 +501,31 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   transform: translateY(16px);
 }
 .diff__item.visible { opacity: 1; transform: translateY(0); transition: opacity .5s ease, transform .5s ease, border-color var(--transition), box-shadow var(--transition); }
-.diff__item:hover { border-color: rgba(46,95,172,.2); box-shadow: var(--shadow-card); }
+/* diff items are not clickable — no hover */
 .diff__icon {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  background: rgba(46,95,172,.08);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--blue);
+  flex-shrink: 0;
 }
-.diff__icon svg { width: 100%; height: 100%; }
+.diff__icon svg { width: 22px; height: 22px; }
 .diff__title {
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
   color: var(--navy);
+  line-height: 1.3;
 }
 .diff__desc {
-  font-size: .875rem;
+  font-family: var(--font-body);
+  font-size: .8125rem;
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* ==========================================

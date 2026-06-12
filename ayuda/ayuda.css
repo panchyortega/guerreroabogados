@@ -555,23 +555,19 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
 }
 .article-body p { margin-bottom: 1rem; }
 .article-body ul {
-  list-style: none;
+  list-style: disc;
+  padding-left: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: .4rem;
   margin-bottom: 1rem;
 }
 .article-body ul li {
-  display: flex;
-  gap: .6rem;
-  align-items: flex-start;
+  color: var(--text-body);
+  padding-left: .25rem;
 }
-.article-body ul li::before {
-  content: '·';
+.article-body ul li::marker {
   color: var(--blue-light);
-  font-size: 1.1em;
-  flex-shrink: 0;
-  line-height: 1;
 }
 .article-body .note {
   background: var(--off-white);

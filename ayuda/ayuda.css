@@ -901,3 +901,11 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   border-bottom: 1px solid var(--warm-grey);
 }
 .cat-subcat-title:first-child { margin-top: 0; }
+
+/* Estado vacío en página de categoría */
+.cat-empty {
+  font-size: .9375rem;
+  color: var(--text-muted);
+  padding: 2rem 0;
+  font-style: italic;
+}

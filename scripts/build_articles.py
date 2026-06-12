@@ -202,19 +202,21 @@ def build_category_index(cat_slug, cat_info, articles_by_subcat, wa_msg):
     depth = 1  # ayuda/cat/index.html — CSS is at ../../ayuda/ayuda.css... wait, relative from cat/index.html it's ../ayuda.css
 
     # Build article list grouped by subcategory
-    articles_html = ""
-    for subcat, articles in articles_by_subcat.items():
-        if subcat:
-            articles_html += f'\n        <h3 class="cat-subcat-title">{subcat}</h3>\n'
-        articles_html += '\n        <nav class="article-list">\n'
-        for art in articles:
-            articles_html += f"""          <a href="{art['slug']}.html" class="article-item">
+    total = sum(len(v) for v in articles_by_subcat.values())
+    if total == 0:
+        articles_html = '<p class="cat-empty">Aún no hay artículos en esta categoría. Vuelve pronto.</p>'
+    else:
+        articles_html = ""
+        for subcat, articles in articles_by_subcat.items():
+            if subcat:
+                articles_html += f'\n        <h3 class="cat-subcat-title">{subcat}</h3>\n'
+            articles_html += '\n        <nav class="article-list">\n'
+            for art in articles:
+                articles_html += f"""          <a href="{art['slug']}.html" class="article-item">
             <span class="article-item__title">{art['titulo']}</span>
             <svg class="article-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>\n"""
-        articles_html += "        </nav>\n"
-
-    total = sum(len(v) for v in articles_by_subcat.values())
+            articles_html += "        </nav>\n" 
 
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -255,6 +257,25 @@ def build_category_index(cat_slug, cat_info, articles_by_subcat, wa_msg):
 {shared_footer(1)}
 </body>
 </html>"""
+
+def update_category_counts(by_cat):
+    """Update article count displayed on each cat-card in ayuda/index.html."""
+    index_path = os.path.join(AYUDA_DIR, "index.html")
+    if not os.path.exists(index_path):
+        return
+    html = open(index_path).read()
+    for cat_slug in CATEGORIES:
+        total = sum(len(v) for v in by_cat.get(cat_slug, {}).values())
+        label = f"{total} artículo{'s' if total != 1 else ''}"
+        # Replace count inside the card with data-cat matching this slug
+        html = re.sub(
+            rf'(data-cat="{cat_slug}"[^>]*>.*?<span class="cat-card__count">)[^<]*(</span>)',
+            rf'\g<1>{label}\g<2>',
+            html, flags=re.DOTALL
+        )
+    open(index_path, "w").write(html)
+    print("  📊 Conteos de artículos actualizados en ayuda/index.html")
+
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 def main():
@@ -313,19 +334,19 @@ def main():
                 os.remove(idx)
                 print(f"  🗑️  Eliminado: {cat_slug}/index.html")
 
-    # Generate files
-    for cat_slug, subcats in by_cat.items():
+    # Generate files — always generate index for ALL categories
+    for cat_slug, cat_info in CATEGORIES.items():
         cat_dir = os.path.join(AYUDA_DIR, cat_slug)
         os.makedirs(cat_dir, exist_ok=True)
-
-        cat_info = CATEGORIES[cat_slug]
         wa_msg = WA_DEFAULTS.get(cat_slug, WA_DEFAULT)
+        subcats = by_cat.get(cat_slug, {})
 
-        # Write category index
+        # Write category index (even if empty)
         cat_html = build_category_index(cat_slug, cat_info, subcats, wa_msg)
         with open(os.path.join(cat_dir, "index.html"), "w") as f:
             f.write(cat_html)
-        print(f"  📁 {cat_slug}/index.html")
+        total = sum(len(v) for v in subcats.values())
+        print(f"  📁 {cat_slug}/index.html ({total} artículos)")
 
         # Write each article
         for subcat, arts in subcats.items():
@@ -335,6 +356,9 @@ def main():
                 with open(path, "w") as f:
                     f.write(art_html)
                 print(f"  📄 {cat_slug}/{art['slug']}.html")
+
+    # Update article counts in ayuda/index.html
+    update_category_counts(by_cat)
 
     # Rebuild search index
     build_search_index(by_cat)

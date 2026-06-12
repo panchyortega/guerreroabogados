@@ -154,8 +154,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   flex-shrink: 0;
 }
 .header__logo-main {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.25rem;
+  font-weight: 600;
   color: var(--off-white);
   letter-spacing: .01em;
 }
@@ -456,9 +457,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   margin-bottom: 1rem;
 }
 .process__step-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.0625rem;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--off-white);
   margin-bottom: .6rem;
   line-height: 1.3;
@@ -483,7 +484,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
 /* ==========================================
    DIFFERENTIATORS
    ========================================== */
-.differentiators { background: #fff; }
+.differentiators { background: var(--off-white); }
 .diff__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -678,8 +679,9 @@ a.contact__info-value:hover { color: var(--off-white); }
   border-bottom: 1px solid rgba(255,255,255,.07);
 }
 .footer__logo {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.375rem;
+  font-weight: 700;
   color: var(--off-white);
   margin-bottom: .75rem;
 }
@@ -828,3 +830,60 @@ a.contact__info-value:hover { color: var(--off-white); }
   .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; }
   .whatsapp-float svg { width: 24px; height: 24px; }
 }
+
+/* ==========================================
+   FAQ → CENTRO DE AYUDA CTA BLOCK
+   ========================================== */
+.faq-help-cta {
+  margin-top: 2.5rem;
+  padding: 1.75rem;
+  background: var(--off-white);
+  border: 1px solid var(--warm-grey);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.faq-help-cta__eyebrow {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: .4rem;
+}
+.faq-help-cta__title {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: .4rem;
+  line-height: 1.3;
+}
+.faq-help-cta__desc {
+  font-size: .9rem;
+  color: var(--text-muted);
+  max-width: 52ch;
+  line-height: 1.55;
+}
+.btn-help-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .8rem 1.5rem;
+  background: var(--navy);
+  color: var(--off-white);
+  border-radius: var(--radius-sm);
+  font-size: .9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-help-cta:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+/* Icon arrows — shared utility */
+.icon-arrow { width: 15px; height: 15px; flex-shrink: 0; }

@@ -116,8 +116,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   flex-shrink: 0;
 }
 .header__logo-main {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.25rem;
+  font-weight: 600;
   color: var(--off-white);
 }
 .header__logo-sub {
@@ -479,8 +480,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   justify-content: center;
 }
 .sidebar-box__title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.125rem;
+  font-weight: 600;
   color: var(--off-white);
   margin-bottom: .6rem;
 }
@@ -627,8 +629,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   border-bottom: 1px solid rgba(255,255,255,.07);
 }
 .footer__logo {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.375rem;
+  font-weight: 700;
   color: var(--off-white);
   margin-bottom: .75rem;
 }

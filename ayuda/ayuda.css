@@ -380,6 +380,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   color: var(--blue-light);
   letter-spacing: .05em;
 }
+.cat-card__arrow svg { width: 14px; height: 14px; flex-shrink: 0; }
 .cat-card__arrow {
   font-size: .8125rem;
   font-weight: 500;
@@ -390,7 +391,8 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   margin-top: .25rem;
   transition: gap var(--transition);
 }
-.cat-card:hover .cat-card__arrow { gap: .6rem; }
+.cat-card:hover .cat-card__arrow svg { width: 14px; height: 14px; flex-shrink: 0; }
+.cat-card__arrow { gap: .6rem; }
 
 /* ==========================================
    CATEGORY PAGE LAYOUT

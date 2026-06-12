@@ -327,10 +327,8 @@ def rebuild_ayuda_index(active_categories, by_cat):
     # Replace the grid content
     import re as re2
     html = re2.sub(
-        r'(<div class="help-categories__grid">).*?(</div>\s*</section>)',
-        rf'\1
-{cards_html}
-      \2',
+        r'(<div class=\"help-categories__grid\">).*?(</div>\s*</section>)',
+        lambda m: m.group(1) + "\n" + cards_html + "\n      </div>\n  </section>",
         html,
         flags=re2.DOTALL,
         count=1

@@ -12,5 +12,12 @@ const SEARCH_INDEX = [
     "cat_slug": "prueba",
     "url": "prueba/esto-es-la-prueba-que-estoy-haciendo-de-articulo.html",
     "text": "esto es la prueba que estoy haciendo de artículo hello world"
+  },
+  {
+    "title": "para ver cómo se ve",
+    "cat": "aaaaaa",
+    "cat_slug": "prueba",
+    "url": "prueba/para-ver-como-se-ve.html",
+    "text": "para ver cómo se ve todo en python, sin js del lado del servidor. el mismo sistema que ya tienes con guerrero abogados, pero más estructurado. el template de un proyecto se vería algo así:"
   }
 ];

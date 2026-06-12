@@ -1,95 +1,56 @@
 # Guerrero Abogados — Sitio Web
 
-Sitio web estático para Guerrero Abogados, construido con HTML, CSS y JavaScript vanilla. El Centro de Ayuda se gestiona desde Google Sheets.
+Sitio web de Guerrero Abogados. El sitio principal está en HTML/CSS/JS vanilla. El Centro de Ayuda se gestiona desde Google Sheets — sin tocar código.
+
+**Sitio en producción:** https://panchyortega.github.io/guerreroabogadosweb/
+**Google Sheet (Centro de Ayuda):** https://docs.google.com/spreadsheets/d/1qsPSjlMgp7o_qV_vTWHg2vTHLeWnUIzaoo23P_eaDoc/edit
 
 ---
 
-## Estructura de archivos
+## Para quien no cacha de código: actualizar el Centro de Ayuda
 
-```
-guerreroabogadosweb/
-├── index.html              # Página principal
-├── styles.css              # Estilos del sitio principal
-├── main.js                 # JS del sitio principal
-├── ayuda/                  # Centro de Ayuda (generado automáticamente)
-│   ├── index.html          # Página principal del Centro de Ayuda
-│   ├── ayuda.css           # Estilos del Centro de Ayuda
-│   ├── ayuda.js            # JS del Centro de Ayuda
-│   ├── search-index.js     # Índice de búsqueda (generado automáticamente)
-│   ├── deudas/             # Categoría: Deudas
-│   ├── contratos/          # Categoría: Contratos
-│   ├── laboral/            # Categoría: Derecho laboral
-│   ├── propiedades/        # Categoría: Propiedades
-│   ├── migratorio/         # Categoría: Derecho migratorio
-│   ├── civil/              # Categoría: Derecho civil
-│   └── [otras categorías]/ # Categorías creadas desde el Sheet
-├── scripts/
-│   ├── build_articles.py   # Script que lee el Sheet y genera el HTML
-│   └── setup-sheet.gs      # Script de configuración del Google Sheet
-└── .github/
-    └── workflows/
-        └── build-articles.yml  # GitHub Action para publicar artículos
-```
+Todo el contenido del Centro de Ayuda (artículos, categorías) se edita desde Google Sheets. No hay que tocar ningún archivo del sitio.
+
+### Paso 1 — Pedir acceso al Sheet
+
+Solicitar acceso a la administradora del sitio. El Sheet tiene dos pestañas: **Categorías** y **Artículos**.
+
+### Paso 2 — Editar el Sheet
+
+**Pestaña "Categorías"** — controla las categorías que aparecen en el Centro de Ayuda:
+
+| Columna | Qué es | Se puede cambiar? |
+|---------|--------|-------------------|
+| `slug` | Identificador interno (ej: `deudas`) | ⛔ Nunca. Si se cambia, los artículos vinculados dejan de funcionar. |
+| `titulo` | Nombre que se ve en el sitio | ✅ Sí |
+| `descripcion` | Texto bajo el título en las cards | ✅ Sí |
+
+Para agregar una categoría nueva: agrega una fila nueva con un slug en **minúsculas, sin espacios, sin tildes, sin mayúsculas** (ej: `familia`, `penal`, `consumidor`). Luego agrega artículos con ese slug en la pestaña Artículos.
 
 ---
 
-## Sitio en producción
+**Pestaña "Artículos"** — cada fila es un artículo:
 
-**https://panchyortega.github.io/guerreroabogadosweb/**
-
----
-
-## Cómo actualizar el Centro de Ayuda
-
-El contenido del Centro de Ayuda se gestiona desde Google Sheets. No es necesario tocar código.
-
-### Google Sheet
-**https://docs.google.com/spreadsheets/d/1qsPSjlMgp7o_qV_vTWHg2vTHLeWnUIzaoo23P_eaDoc/edit**
-
-> Para acceder a editar el Sheet, solicitar acceso a la administradora del sitio.
-
----
-
-### Pestaña "Categorías"
-
-Controla las categorías que aparecen en el Centro de Ayuda.
-
-| Columna | Descripción |
-|---------|-------------|
-| `slug` | Identificador interno. **No cambiar nunca.** Es lo que vincula los artículos a la categoría. |
-| `titulo` | Nombre que se muestra en el sitio. Se puede editar libremente. |
-| `descripcion` | Descripción breve que aparece bajo el título en las cards. |
-
-**Para agregar una categoría nueva:** agrega una fila con un slug en minúsculas sin espacios (ej: `familia`), un título y una descripción.
-
----
-
-### Pestaña "Artículos"
-
-Cada fila es un artículo del Centro de Ayuda.
-
-| Columna | Descripción |
-|---------|-------------|
-| `categoria` | Slug de la categoría (desplegable). Debe coincidir con un slug de la pestaña Categorías. |
-| `subcategoria` | Subtítulo agrupador dentro de la categoría. Opcional. Ej: `"Juicios ejecutivos"` |
+| Columna | Qué es |
+|---------|--------|
+| `categoria` | Slug de la categoría (desplegable). Debe ser exactamente igual al slug de la pestaña Categorías. |
+| `subcategoria` | Agrupador dentro de la categoría. Opcional. Ej: `Juicios ejecutivos` |
 | `titulo` | Título del artículo. Ej: `¿Qué es un juicio ejecutivo?` |
 | `subtitulo` | Bajada corta bajo el título. Opcional. |
-| `contenido` | Cuerpo del artículo en Markdown (ver formato abajo). |
-| `wa_mensaje` | Mensaje prellenado de WhatsApp. Si se deja vacío usa el de la categoría. |
-| `publicado` | `SI` para publicar, `NO` o vacío para borrador. |
+| `contenido` | Cuerpo del artículo (ver formato más abajo). |
+| `wa_mensaje` | Mensaje prellenado de WhatsApp al final del artículo. Si se deja vacío usa el de la categoría. |
+| `publicado` | `SI` para publicar. `NO` o vacío = borrador (no aparece en el sitio). |
 
----
+**Formato del contenido:**
 
-### Formato del contenido (Markdown)
-
-El contenido se escribe en la celda E con este formato simple:
+El texto del artículo se escribe en la celda de `contenido` así:
 
 ```
-## Primer subtítulo
+## Este es un subtítulo
 
-Un párrafo normal de texto.
+Este es un párrafo normal. Se puede escribir con libertad.
 
-## Segundo subtítulo
+## Otro subtítulo
 
 Otro párrafo.
 
@@ -98,66 +59,141 @@ Otro párrafo.
 - Un item más
 ```
 
-- `##` al inicio de una línea → subtítulo
-- `-` al inicio de una línea → ítem de lista
-- Líneas normales → párrafos
+Reglas simples:
+- `##` al inicio → subtítulo
+- `-` al inicio → ítem de lista
+- Cualquier otra línea → párrafo normal
 
----
+### Paso 3 — Publicar los cambios
 
-### Publicar los cambios
-
-Después de editar el Sheet, hay que publicar manualmente:
+Después de editar el Sheet, los cambios **no aparecen solos**. Hay que ir a GitHub y publicar manualmente:
 
 1. Ir a **github.com/panchyortega/guerreroabogadosweb/actions**
-2. Clic en **"Publicar artículos desde Google Sheet"** (menú izquierdo)
-3. Clic en **"Run workflow"** → **"Run workflow"** (botón verde)
-4. Esperar ~30 segundos
-5. El sitio se actualiza en 1-2 minutos
+2. En el menú izquierdo, clic en **"Publicar artículos desde Google Sheet"**
+3. Clic en el botón **"Run workflow"** (lado derecho)
+4. Clic en el botón verde **"Run workflow"**
+5. Esperar ~1 minuto
+6. El sitio se actualiza solo
+
+Si el workflow sale con ✅ verde, los cambios están publicados. Si sale ❌ rojo, algo salió mal — avisar a quien mantiene el sitio.
 
 ---
 
-## Correr localmente
+## ⛔ Qué NO tocar nunca
 
-No requiere instalación. Abre `index.html` directamente en el browser.
-
-O con Python:
-```bash
-python3 -m http.server 3000
-# Abre http://localhost:3000
-```
+- **Los archivos HTML dentro de `/ayuda/`** — se sobreescriben automáticamente en cada publicación. Cualquier cambio manual se pierde.
+- **`ayuda/search-index.js`** — generado automáticamente. No editar.
+- **Los slugs de la pestaña Categorías** — si se cambian, los artículos asociados dejan de funcionar.
+- **Los secrets del repo** — `GH_TOKEN` y `SHEET_ID` en GitHub → Settings → Secrets. No tocar.
 
 ---
 
-## Cambios de código
+## Para diseñadores: cambios visuales
 
-### Colores
-En `styles.css`, variables al inicio del archivo:
+### Tipografías
+- **DM Serif Display** — solo para títulos grandes (H1 de artículos, títulos de sección ≥1.5rem)
+- **Inter** — todo lo demás: cuerpo, botones, labels, navegación
+
+Importadas desde Google Fonts, declaradas en el `<head>` de cada HTML.
+
+### Archivos de estilos
+- `styles.css` — estilos del sitio principal (home, servicios, contacto, FAQ, footer)
+- `ayuda/ayuda.css` — estilos del Centro de Ayuda (hero, cards de categorías, artículos, buscador)
+
+Son archivos separados. Un cambio en `styles.css` no afecta el Centro de Ayuda y viceversa.
+
+### Variables de color
+Al inicio de `styles.css` y `ayuda/ayuda.css`:
+
 ```css
 :root {
-  --navy:      #0F1F3D;
-  --blue:      #2E5FAC;
-  --off-white: #F5F3EE;
+  --navy:        #0F1F3D;  /* Azul marino — fondos oscuros, títulos */
+  --navy-mid:    #1A3560;  /* Azul medio — sección contacto */
+  --blue:        #2E5FAC;  /* Azul activo — links, íconos, acentos */
+  --blue-light:  #8EA8C3;  /* Azul grisáceo — textos secundarios */
+  --off-white:   #F5F3EE;  /* Beige cálido — fondos de secciones claras */
+  --warm-grey:   #E8E5DF;  /* Gris cálido — bordes */
+  --text-dark:   #1C1C1C;  /* Texto principal */
+  --text-muted:  #6B7280;  /* Texto secundario */
+  --green-wa:    #25D366;  /* Verde WhatsApp */
 }
 ```
 
 ### Número de WhatsApp
-Busca `56983937954` en `index.html` y reemplaza.
+Busca y reemplaza `56983937954` en `index.html` (aparece varias veces). En los archivos de `/ayuda/` está hardcodeado en `scripts/build_articles.py` — variable `WA_NUMBER` al inicio del archivo.
 
-### Publicar cambios de código
+---
+
+## Para desarrolladores
+
+### Stack
+- HTML/CSS/JS vanilla — sin frameworks, sin build step para el sitio principal
+- GitHub Pages — deploy automático en cada push a `main`
+- Python 3.11 — script de build del Centro de Ayuda (`scripts/build_articles.py`)
+- GitHub Actions — corre el script manualmente o en cada push
+
+### Cómo funciona el build del Centro de Ayuda
+
+1. El workflow (`build-articles.yml`) corre `build_articles.py`
+2. El script descarga las dos pestañas del Sheet como CSV (URLs hardcodeadas en el script)
+3. Lee la pestaña **Categorías** → construye el diccionario `active_categories`
+4. Lee la pestaña **Artículos** → filtra los que tienen `publicado = SI`
+5. Para cada categoría: genera `ayuda/{slug}/index.html` con la lista de artículos
+6. Para cada artículo: convierte el contenido Markdown a HTML y genera `ayuda/{slug}/{titulo-slugificado}.html`
+7. Borra los HTMLs que ya no están en el Sheet
+8. Reconstruye `ayuda/index.html` con las cards de categorías actualizadas
+9. Reconstruye `ayuda/search-index.js` con todos los artículos indexados
+10. Hace commit y push de los cambios al repo
+11. GitHub Pages detecta el push y publica el sitio
+
+### Agregar un campo nuevo al Sheet
+
+1. Agregar la columna en el Sheet (pestaña Artículos)
+2. En `build_articles.py`, leer el campo con `art.get("nombre_columna", "")` en la función `build_article()`
+3. Usarlo en el template HTML dentro de la misma función
+
+### URLs del Sheet (CSV publicado)
+
+```python
+SHEET_URL_ARTICLES   = "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?gid=0&single=true&output=csv"
+SHEET_URL_CATEGORIES = "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?gid=1831731050&single=true&output=csv"
+```
+
+Si se crea un Sheet nuevo, hay que publicarlo en **Archivo → Compartir → Publicar en la web → CSV** y actualizar estas URLs en el script.
+
+### Correr localmente
+
+```bash
+# Sitio principal
+python3 -m http.server 3000
+# Abre http://localhost:3000
+
+# Probar el script de build (requiere que el Sheet esté publicado)
+pip install requests
+python3 scripts/build_articles.py
+```
+
+### Deploy
+
 ```bash
 git add .
 git commit -m "descripción del cambio"
 git push
 ```
-GitHub Pages se actualiza en 1-2 minutos.
+
+GitHub Pages publica automáticamente en 1-2 minutos.
 
 ---
 
-## Token de acceso GitHub
+## Mantenimiento del token GitHub
 
-El workflow usa un token guardado como secret en el repo (`GH_TOKEN`). Expira en junio 2027. Cuando expire:
+El workflow usa un Personal Access Token guardado como secret `GH_TOKEN`. **Expira en junio 2027.**
 
-1. Generar nuevo token en GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Scopes: `repo` + `workflow`
-3. Expiración: 1 año
-4. Ir al repo → Settings → Secrets and variables → Actions → `GH_TOKEN` → Update
+Cuando expire, el workflow fallará con un error de autenticación. Para renovarlo:
+
+1. Ir a GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Generar nuevo token con scopes: `repo` + `workflow`, expiración 1 año
+3. Ir al repo → Settings → Secrets and variables → Actions → `GH_TOKEN` → Update
+4. Pegar el nuevo token
+
+El `SHEET_ID` también está guardado como secret pero no expira.

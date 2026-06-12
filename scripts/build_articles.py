@@ -485,13 +485,15 @@ def main():
     rebuild_ayuda_index(active_categories, by_cat)
 
     # Rebuild search index
-    build_search_index(by_cat)
+    build_search_index(by_cat, active_categories)
     print("✅ Build completo")
 
-def build_search_index(by_cat):
+def build_search_index(by_cat, active_categories=None):
+    if active_categories is None:
+        active_categories = CATEGORIES
     articles = []
     for cat_slug, subcats in by_cat.items():
-        cat_title = CATEGORIES[cat_slug]["title"]
+        cat_title = active_categories.get(cat_slug, {}).get("title", cat_slug)
         for subcat, arts in subcats.items():
             for art in arts:
                 body_html = markdown_to_html(art.get("contenido", ""))

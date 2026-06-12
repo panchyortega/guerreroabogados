@@ -14,6 +14,7 @@ Todo el contenido del Centro de Ayuda (artículos, categorías) se edita desde G
 ### Paso 1 — Pedir acceso al Sheet
 
 Solicitar acceso a la administradora del sitio. El Sheet tiene dos pestañas: **Categorías** y **Artículos**.
+https://docs.google.com/spreadsheets/d/1qsPSjlMgp7o_qV_vTWHg2vTHLeWnUIzaoo23P_eaDoc/edit?usp=sharing
 
 ### Paso 2 — Editar el Sheet
 

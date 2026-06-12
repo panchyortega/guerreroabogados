@@ -88,20 +88,34 @@ function initReveal() {
   allReveal.forEach(el => revealObserver.observe(el));
 }
 
-/* ---- Hero parallax ---- */
+/* ---- Hero word rotator ---- */
+function initWordRotator() {
+  const words = document.querySelectorAll('.hero__word');
+  if (!words.length) return;
+  let current = 0;
+  words[0].classList.add('is-active');
+  setInterval(() => {
+    const prev = current;
+    current = (current + 1) % words.length;
+    words[prev].classList.remove('is-active');
+    words[prev].classList.add('is-leaving');
+    words[prev].addEventListener('transitionend', function h() {
+      words[prev].classList.remove('is-leaving');
+      words[prev].removeEventListener('transitionend', h);
+    });
+    words[current].classList.add('is-active');
+  }, 2200);
+}
+
+/* ---- Hero parallax (visual cards) ---- */
 function initParallax() {
-  const parallaxEl = document.getElementById('hero-parallax');
-  if (!parallaxEl) return;
-
-  // Skip if reduced motion
+  const visual = document.getElementById('heroVisual');
+  if (!visual) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
     const heroH = document.querySelector('.hero')?.offsetHeight || 700;
-    if (scrollY > heroH) return;
-    const pct = scrollY / heroH;
-    parallaxEl.style.transform = `translateY(${scrollY * 0.18}px)`;
+    if (window.scrollY > heroH) return;
+    visual.style.transform = `translateY(calc(-50% + ${window.scrollY * 0.25}px))`;
   }, { passive: true });
 }
 
@@ -154,6 +168,7 @@ function initSmoothScroll() {
 /* ---- Init ---- */
 document.addEventListener('DOMContentLoaded', () => {
   initReveal();
+  initWordRotator();
   initParallax();
   initFAQ();
   initSmoothScroll();

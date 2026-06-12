@@ -490,6 +490,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   gap: 1.5rem 2rem;
 }
 .diff__item {
+  background: #fff;
   display: flex;
   flex-direction: column;
   gap: .6rem;

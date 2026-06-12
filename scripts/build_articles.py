@@ -296,6 +296,49 @@ def update_category_counts(by_cat, active_categories=None):
     print("  📊 Cards de categorías actualizadas en ayuda/index.html")
 
 
+
+def rebuild_ayuda_index(active_categories, by_cat):
+    """Rebuild ayuda/index.html from scratch based on current categories."""
+    index_path = os.path.join(AYUDA_DIR, "index.html")
+    if not os.path.exists(index_path):
+        print("  ⚠️  ayuda/index.html no encontrado, no se puede reconstruir")
+        return
+
+    html = open(index_path).read()
+
+    # Build new cards grid
+    cards_html = ""
+    for cat_slug, cat_info in active_categories.items():
+        total = sum(len(v) for v in by_cat.get(cat_slug, {}).values())
+        label = f"{total} artículo{'s' if total != 1 else ''}"
+        title = cat_info.get("title", cat_slug)
+        desc = cat_info.get("desc", "")
+        wa_msg = WA_DEFAULTS.get(cat_slug, WA_DEFAULT)
+
+        cards_html += f"""
+        <a href="{cat_slug}/index.html" class="cat-card reveal" data-cat="{cat_slug}" aria-label="Categoría: {title}">
+          <h3 class="cat-card__title">{title}</h3>
+          <p class="cat-card__desc">{desc}</p>
+          <span class="cat-card__count">{label}</span>
+          <span class="cat-card__arrow">Ver artículos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+"""
+
+    # Replace the grid content
+    import re as re2
+    html = re2.sub(
+        r'(<div class="help-categories__grid">).*?(</div>\s*</section>)',
+        rf'\1
+{cards_html}
+      \2',
+        html,
+        flags=re2.DOTALL,
+        count=1
+    )
+    open(index_path, "w").write(html)
+    print(f"  🗂️  ayuda/index.html reconstruido con {len(active_categories)} categorías")
+
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 def fetch_categories():
     """Fetch categories from the second sheet tab. Falls back to CATEGORIES default."""
@@ -411,8 +454,8 @@ def main():
                     f.write(art_html)
                 print(f"  📄 {cat_slug}/{art['slug']}.html")
 
-    # Update article counts in ayuda/index.html
-    update_category_counts(by_cat, active_categories)
+    # Rebuild ayuda/index.html with current categories
+    rebuild_ayuda_index(active_categories, by_cat)
 
     # Rebuild search index
     build_search_index(by_cat)

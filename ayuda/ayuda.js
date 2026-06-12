@@ -118,14 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
   input.addEventListener('input', () => {
     clearTimeout(debounceTimer);
     const q = input.value;
-    clearBtn.style.display = q ? 'flex' : 'none';
+    q ? clearBtn.classList.add('visible') : clearBtn.classList.remove('visible');
     debounceTimer = setTimeout(() => renderDropdown(q), 180);
   });
 
   // Clear button
   clearBtn.addEventListener('click', () => {
     input.value = '';
-    clearBtn.style.display = 'none';
+    clearBtn.classList.remove('visible');
     dropdown.hidden = true;
     input.focus();
   });

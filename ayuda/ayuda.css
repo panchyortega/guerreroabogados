@@ -469,6 +469,11 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   position: sticky;
   top: 96px;
 }
+/* Sidebar WhatsApp button always full width */
+.sidebar-box .btn--whatsapp {
+  width: 100%;
+  justify-content: center;
+}
 .sidebar-box__title {
   font-family: var(--font-display);
   font-size: 1.125rem;
@@ -526,10 +531,15 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   font-size: 1.0625rem;
   color: var(--text-muted);
   line-height: 1.65;
-  max-width: 55ch;
 }
 
-.article-body { font-size: .9375rem; color: var(--text-body); line-height: 1.75; }
+.article-body {
+  font-size: .9375rem;
+  color: var(--text-body);
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
 .article-body h2 {
   font-family: var(--font-display);
   font-size: 1.1875rem;
@@ -666,9 +676,60 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   .footer__brand { grid-column: 1 / -1; }
 }
 @media (max-width: 600px) {
+  /* Categories */
   .help-categories__grid { grid-template-columns: 1fr; }
+
+  /* Article layout: single column, tighter padding */
+  .cat-layout,
+  .article-layout {
+    padding-block: 1.5rem 3rem;
+    gap: 1.5rem;
+  }
+
+  /* Article header */
+  .article-header__title {
+    font-size: clamp(1.375rem, 6vw, 1.75rem);
+  }
+  .article-header__subtitle {
+    font-size: 1rem;
+  }
+
+  /* Article body text slightly smaller for readability */
+  .article-body {
+    font-size: .9rem;
+  }
+  .article-body h2 {
+    font-size: 1.0625rem;
+    margin-top: 1.5rem;
+  }
+
+  /* Article CTA — stack button full width */
+  .article-cta {
+    padding: 1.25rem;
+  }
+  .article-cta .btn--whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Sidebar compact on mobile */
+  .sidebar-box {
+    position: static;
+    padding: 1.25rem;
+  }
+
+  /* Also-list */
+  .also-list { margin-top: 1.5rem; }
+
+  /* Breadcrumb wrap */
+  .breadcrumb__list { gap: .35rem; }
+  .breadcrumb__item { font-size: .75rem; }
+
+  /* Footer */
   .footer__grid { grid-template-columns: 1fr; }
   .footer__brand { grid-column: auto; }
+
+  /* Floating WA */
   .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; }
   .whatsapp-float svg { width: 24px; height: 24px; }
 }
@@ -769,3 +830,54 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   text-align: center;
 }
 .search-empty strong { color: var(--navy); }
+
+/* ==========================================
+   SEARCH WRAPPER (ayuda/index.html)
+   ========================================== */
+.search-wrapper {
+  max-width: 520px;
+  margin-inline: auto;
+  margin-top: 1.75rem;
+  position: relative;
+}
+.search-clear svg {
+  width: 16px;
+  height: 16px;
+}
+/* JS sets display:none/flex — override hidden state via class */
+.search-clear { display: none; }
+.search-clear.visible { display: flex; }
+
+/* ==========================================
+   AYUDA INDEX — CTA BOTTOM SECTION
+   ========================================== */
+.help-cta-section {
+  background: #fff;
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--warm-grey);
+}
+.help-cta-inner {
+  text-align: center;
+  max-width: 560px;
+}
+.help-cta-eyebrow {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: .75rem;
+}
+.help-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  color: var(--navy);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.help-cta-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}

@@ -106,9 +106,7 @@
       </a>
       <nav class="header__nav" aria-label="Navegación principal">
         <ul class="header__nav-list">
-          <li><a href="#inicio" class="header__nav-link">Inicio</a></li>
           <li><a href="#servicios" class="header__nav-link">Servicios</a></li>
-          <li><a href="#como-trabajamos" class="header__nav-link">Cómo trabajamos</a></li>
           <li><a href="#preguntas" class="header__nav-link">Preguntas frecuentes</a></li>
           <li><a href="ayuda/index.html" class="header__nav-link">Centro de ayuda</a></li>
           <li><a href="#contacto" class="header__nav-link">Contacto</a></li>
@@ -132,9 +130,7 @@
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <nav aria-label="Navegación móvil">
         <ul class="mobile-menu__list">
-          <li><a href="#inicio" class="mobile-menu__link">Inicio</a></li>
           <li><a href="#servicios" class="mobile-menu__link">Servicios</a></li>
-          <li><a href="#como-trabajamos" class="mobile-menu__link">Cómo trabajamos</a></li>
           <li><a href="#preguntas" class="mobile-menu__link">Preguntas frecuentes</a></li>
           <li><a href="ayuda/index.html" class="mobile-menu__link">Centro de ayuda</a></li>
           <li><a href="#contacto" class="mobile-menu__link">Contacto</a></li>
@@ -364,7 +360,7 @@
   </section>
 
   <!-- ======================== DIFFERENTIATORS ======================== -->
-  <section class="section differentiators" id="diferenciadores" aria-labelledby="diff-title">
+  <section class="section differentiators" id="diferenciadores" style="background:var(--off-white)" aria-labelledby="diff-title">
     <div class="container">
       <div class="section__header">
         <p class="section__eyebrow">Por qué elegirnos</p>
@@ -417,26 +413,54 @@
     </div>
   </section>
 
-  <!-- ======================== SEO SECTION ======================== -->
-  <section class="section seo-section" id="asesorialegalsantiago" aria-labelledby="seo-title">
+
+  <!-- ======================== CONTACT ======================== -->
+  <section class="section contact" id="contacto" aria-labelledby="contact-title">
     <div class="container">
-      <div class="seo-section__inner">
-        <div class="seo-section__text">
-          <p class="section__eyebrow">Cobertura</p>
-          <h2 class="section__title" id="seo-title">Asesoría legal en Santiago Centro</h2>
-          <p class="seo-section__body">Guerrero Abogados atiende consultas legales en Santiago Centro y presta asesoría en derecho civil, laboral, comercial, migratorio, cobranzas, juicios ejecutivos, prescripción de deudas, contratos y regularización de propiedades.</p>
+      <div class="contact__inner">
+        <div class="contact__text">
+          <p class="section__eyebrow section__eyebrow--light">Contacto</p>
+          <h2 class="section__title section__title--light" id="contact-title">Conversemos sobre tu caso</h2>
+          <p class="contact__desc">Escríbenos por WhatsApp y cuéntanos brevemente qué necesitas. Te orientaremos sobre los pasos a seguir y la mejor forma de abordar tu consulta.</p>
+          <a
+            href="https://wa.me/56983937954?text=Hola%2C%20quisiera%20realizar%20una%20consulta%20legal%20con%20Guerrero%20Abogados."
+            class="btn btn--whatsapp btn--lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.529 5.836L.057 23.215a.75.75 0 0 0 .928.928l5.379-1.472A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.063-1.378l-.363-.214-3.742 1.023 1.023-3.742-.214-.363A9.956 9.956 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+            Contactar por WhatsApp
+          </a>
         </div>
-        <div class="seo-section__chips" aria-label="Búsquedas frecuentes">
-          <span class="chip">Abogado civil en Santiago</span>
-          <span class="chip">Abogado laboral en Santiago</span>
-          <span class="chip">Defensa en juicio ejecutivo</span>
-          <span class="chip">Prescripción de deudas</span>
-          <span class="chip">Regularización de propiedades</span>
-          <span class="chip">Abogado migratorio</span>
-          <span class="chip">Redacción de contratos</span>
-          <span class="chip">Asesoría legal para negocios</span>
-          <span class="chip">Cobranzas judiciales</span>
-          <span class="chip">Abogados Santiago Centro</span>
+        <div class="contact__info">
+          <div class="contact__info-item">
+            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.529 5.836L.057 23.215a.75.75 0 0 0 .928.928l5.379-1.472A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.063-1.378l-.363-.214-3.742 1.023 1.023-3.742-.214-.363A9.956 9.956 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+            <div>
+              <span class="contact__info-label">WhatsApp</span>
+              <a href="https://wa.me/56983937954" class="contact__info-value" target="_blank" rel="noopener noreferrer">+56 9 8393 7954</a>
+            </div>
+          </div>
+          <div class="contact__info-item">
+            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <span class="contact__info-label">Correo</span>
+              <a href="mailto:guerreroabogados_@outlook.com" class="contact__info-value">guerreroabogados_@outlook.com</a>
+            </div>
+          </div>
+          <div class="contact__info-item">
+            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <span class="contact__info-label">Dirección</span>
+              <span class="contact__info-value">Santa Lucía 344, Oficina 41<br>Santiago Centro</span>
+            </div>
+          </div>
+          <div class="contact__info-item">
+            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>
+              <span class="contact__info-label">Horario</span>
+              <span class="contact__info-value">Lunes a viernes<br>9:00 a 18:00 hrs.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -524,58 +548,6 @@
           Ir al Centro de Ayuda
           <svg style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== CONTACT ======================== -->
-  <section class="section contact" id="contacto" aria-labelledby="contact-title">
-    <div class="container">
-      <div class="contact__inner">
-        <div class="contact__text">
-          <p class="section__eyebrow section__eyebrow--light">Contacto</p>
-          <h2 class="section__title section__title--light" id="contact-title">Conversemos sobre tu caso</h2>
-          <p class="contact__desc">Escríbenos por WhatsApp y cuéntanos brevemente qué necesitas. Te orientaremos sobre los pasos a seguir y la mejor forma de abordar tu consulta.</p>
-          <a
-            href="https://wa.me/56983937954?text=Hola%2C%20quisiera%20realizar%20una%20consulta%20legal%20con%20Guerrero%20Abogados."
-            class="btn btn--whatsapp btn--lg"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.529 5.836L.057 23.215a.75.75 0 0 0 .928.928l5.379-1.472A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.063-1.378l-.363-.214-3.742 1.023 1.023-3.742-.214-.363A9.956 9.956 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-            Contactar por WhatsApp
-          </a>
-        </div>
-        <div class="contact__info">
-          <div class="contact__info-item">
-            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.529 5.836L.057 23.215a.75.75 0 0 0 .928.928l5.379-1.472A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.063-1.378l-.363-.214-3.742 1.023 1.023-3.742-.214-.363A9.956 9.956 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-            <div>
-              <span class="contact__info-label">WhatsApp</span>
-              <a href="https://wa.me/56983937954" class="contact__info-value" target="_blank" rel="noopener noreferrer">+56 9 8393 7954</a>
-            </div>
-          </div>
-          <div class="contact__info-item">
-            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <div>
-              <span class="contact__info-label">Correo</span>
-              <a href="mailto:guerreroabogados_@outlook.com" class="contact__info-value">guerreroabogados_@outlook.com</a>
-            </div>
-          </div>
-          <div class="contact__info-item">
-            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <div>
-              <span class="contact__info-label">Dirección</span>
-              <span class="contact__info-value">Santa Lucía 344, Oficina 41<br>Santiago Centro</span>
-            </div>
-          </div>
-          <div class="contact__info-item">
-            <svg class="contact__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <div>
-              <span class="contact__info-label">Horario</span>
-              <span class="contact__info-value">Lunes a viernes<br>9:00 a 18:00 hrs.</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>

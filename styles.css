@@ -606,7 +606,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
 /* ==========================================
    FAQ
    ========================================== */
-.faq { background: #fff; }
+.faq { background: var(--off-white); }
 .faq__list {
   max-width: 720px;
   margin-inline: auto;

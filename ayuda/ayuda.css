@@ -189,21 +189,16 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
    HELP CENTER HERO
    ========================================== */
 .help-hero {
-  background: var(--navy);
+  background: #080F1E;
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -5%, rgba(46,95,172,.42) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 90%, rgba(26,53,96,.5) 0%, transparent 55%);
   padding-block: clamp(3rem, 7vw, 5rem);
   position: relative;
   overflow: hidden;
 }
 .help-hero__grid-bg {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(46,95,172,.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46,95,172,.1) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 100% at 50% 50%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 100% at 50% 50%, black 30%, transparent 80%);
-  pointer-events: none;
+  display: none;
 }
 .help-hero__inner {
   position: relative;

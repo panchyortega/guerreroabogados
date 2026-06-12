@@ -20,8 +20,8 @@ import markdown as md_lib
 
 # ── Configuración ──────────────────────────────────────────────────────────────
 SHEET_ID   = os.environ.get("SHEET_ID", "1qsPSjlMgp7o_qV_vTWHg2vTHLeWnUIzaoo23P_eaDoc")
-SHEET_URL_ARTICLES   = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=0"
-SHEET_URL_CATEGORIES = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=1"
+SHEET_URL_ARTICLES   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoBgppXXeZFPo1IuAqaKISWPzoC0Cfis2q13e5_nKlY8ns9hL1ZAMXDVzlx1ynKHdRK9dQEmSivWsJ/pub?gid=0&single=true&output=csv"
+SHEET_URL_CATEGORIES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoBgppXXeZFPo1IuAqaKISWPzoC0Cfis2q13e5_nKlY8ns9hL1ZAMXDVzlx1ynKHdRK9dQEmSivWsJ/pub?gid=1831731050&single=true&output=csv"
 AYUDA_DIR  = os.path.join(os.path.dirname(__file__), "..", "ayuda")
 WA_NUMBER  = "56983937954"
 WA_DEFAULT = "Hola%2C%20quisiera%20realizar%20una%20consulta%20legal%20con%20Guerrero%20Abogados."

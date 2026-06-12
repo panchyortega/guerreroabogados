@@ -672,3 +672,22 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
   .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; }
   .whatsapp-float svg { width: 24px; height: 24px; }
 }
+
+/* Search bar — variante sobre fondo beige */
+.help-search--inline {
+  background: #fff;
+  border-color: var(--warm-grey);
+}
+.help-search--inline:focus-within {
+  border-color: var(--blue-light);
+  background: #fff;
+}
+.help-search--inline .help-search__icon {
+  color: var(--blue);
+}
+.help-search--inline .help-search__input {
+  color: var(--text-dark);
+}
+.help-search--inline .help-search__input::placeholder {
+  color: var(--text-muted);
+}

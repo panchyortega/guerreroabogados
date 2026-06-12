@@ -1,118 +1,163 @@
 # Guerrero Abogados — Sitio Web
 
-Sitio web estático para Guerrero Abogados, construido con HTML, CSS y JavaScript vanilla. Sin dependencias, sin build step, listo para publicar en GitHub Pages.
+Sitio web estático para Guerrero Abogados, construido con HTML, CSS y JavaScript vanilla. El Centro de Ayuda se gestiona desde Google Sheets.
 
 ---
 
 ## Estructura de archivos
 
 ```
-guerreroabogados/
-├── index.html    # Página principal (una sola página con anclas)
-├── styles.css    # Todos los estilos
-├── main.js       # Interacciones (menú, FAQ, scroll reveal, parallax)
-└── README.md     # Este archivo
+guerreroabogadosweb/
+├── index.html              # Página principal
+├── styles.css              # Estilos del sitio principal
+├── main.js                 # JS del sitio principal
+├── ayuda/                  # Centro de Ayuda (generado automáticamente)
+│   ├── index.html          # Página principal del Centro de Ayuda
+│   ├── ayuda.css           # Estilos del Centro de Ayuda
+│   ├── ayuda.js            # JS del Centro de Ayuda
+│   ├── search-index.js     # Índice de búsqueda (generado automáticamente)
+│   ├── deudas/             # Categoría: Deudas
+│   ├── contratos/          # Categoría: Contratos
+│   ├── laboral/            # Categoría: Derecho laboral
+│   ├── propiedades/        # Categoría: Propiedades
+│   ├── migratorio/         # Categoría: Derecho migratorio
+│   ├── civil/              # Categoría: Derecho civil
+│   └── [otras categorías]/ # Categorías creadas desde el Sheet
+├── scripts/
+│   ├── build_articles.py   # Script que lee el Sheet y genera el HTML
+│   └── setup-sheet.gs      # Script de configuración del Google Sheet
+└── .github/
+    └── workflows/
+        └── build-articles.yml  # GitHub Action para publicar artículos
 ```
+
+---
+
+## Sitio en producción
+
+**https://panchyortega.github.io/guerreroabogadosweb/**
+
+---
+
+## Cómo actualizar el Centro de Ayuda
+
+El contenido del Centro de Ayuda se gestiona desde Google Sheets. No es necesario tocar código.
+
+### Google Sheet
+**https://docs.google.com/spreadsheets/d/1qsPSjlMgp7o_qV_vTWHg2vTHLeWnUIzaoo23P_eaDoc/edit**
+
+> Para acceder a editar el Sheet, solicitar acceso a la administradora del sitio.
+
+---
+
+### Pestaña "Categorías"
+
+Controla las categorías que aparecen en el Centro de Ayuda.
+
+| Columna | Descripción |
+|---------|-------------|
+| `slug` | Identificador interno. **No cambiar nunca.** Es lo que vincula los artículos a la categoría. |
+| `titulo` | Nombre que se muestra en el sitio. Se puede editar libremente. |
+| `descripcion` | Descripción breve que aparece bajo el título en las cards. |
+
+**Para agregar una categoría nueva:** agrega una fila con un slug en minúsculas sin espacios (ej: `familia`), un título y una descripción.
+
+---
+
+### Pestaña "Artículos"
+
+Cada fila es un artículo del Centro de Ayuda.
+
+| Columna | Descripción |
+|---------|-------------|
+| `categoria` | Slug de la categoría (desplegable). Debe coincidir con un slug de la pestaña Categorías. |
+| `subcategoria` | Subtítulo agrupador dentro de la categoría. Opcional. Ej: `"Juicios ejecutivos"` |
+| `titulo` | Título del artículo. Ej: `¿Qué es un juicio ejecutivo?` |
+| `subtitulo` | Bajada corta bajo el título. Opcional. |
+| `contenido` | Cuerpo del artículo en Markdown (ver formato abajo). |
+| `wa_mensaje` | Mensaje prellenado de WhatsApp. Si se deja vacío usa el de la categoría. |
+| `publicado` | `SI` para publicar, `NO` o vacío para borrador. |
+
+---
+
+### Formato del contenido (Markdown)
+
+El contenido se escribe en la celda E con este formato simple:
+
+```
+## Primer subtítulo
+
+Un párrafo normal de texto.
+
+## Segundo subtítulo
+
+Otro párrafo.
+
+- Item de lista
+- Otro item
+- Un item más
+```
+
+- `##` al inicio de una línea → subtítulo
+- `-` al inicio de una línea → ítem de lista
+- Líneas normales → párrafos
+
+---
+
+### Publicar los cambios
+
+Después de editar el Sheet, hay que publicar manualmente:
+
+1. Ir a **github.com/panchyortega/guerreroabogadosweb/actions**
+2. Clic en **"Publicar artículos desde Google Sheet"** (menú izquierdo)
+3. Clic en **"Run workflow"** → **"Run workflow"** (botón verde)
+4. Esperar ~30 segundos
+5. El sitio se actualiza en 1-2 minutos
 
 ---
 
 ## Correr localmente
 
-No requiere ningún servidor ni instalación. Solo abre `index.html` en el navegador.
+No requiere instalación. Abre `index.html` directamente en el browser.
 
-**Opción 1 — Doble clic:**
-Abre `index.html` directamente desde el explorador de archivos.
-
-**Opción 2 — Con Live Server (VS Code):**
-1. Instala la extensión "Live Server" en VS Code.
-2. Abre la carpeta del proyecto.
-3. Click derecho sobre `index.html` → "Open with Live Server".
-
-**Opción 3 — Con Python:**
+O con Python:
 ```bash
-cd guerreroabogados
 python3 -m http.server 3000
 # Abre http://localhost:3000
 ```
 
 ---
 
-## Publicar en GitHub Pages
+## Cambios de código
 
-### Primer deploy
-
-1. **Sube los archivos al repo:**
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: sitio web inicial Guerrero Abogados"
-   git branch -M main
-   git remote add origin https://github.com/panchyortega/guerreroabogados.git
-   git push -u origin main
-   ```
-
-2. **Activa GitHub Pages:**
-   - Ve al repo en GitHub → Settings → Pages
-   - En "Source" selecciona: **Deploy from a branch**
-   - Branch: `main` / Folder: `/ (root)`
-   - Haz clic en **Save**
-
-3. **El sitio estará disponible en:**
-   ```
-   https://panchyortega.github.io/guerreroabogados/
-   ```
-   (puede tardar 1–2 minutos en aparecer la primera vez)
-
-### Actualizar el sitio
-
-```bash
-git add .
-git commit -m "fix: descripción del cambio"
-git push
-```
-GitHub Pages se actualiza automáticamente en unos minutos.
-
----
-
-## Ediciones frecuentes
-
-### Cambiar número de WhatsApp
-Busca `56983937954` en `index.html` y reemplaza por el nuevo número (sin espacios, sin guiones, sin +).
-
-### Cambiar textos
-Edita directamente en `index.html`. Los textos están en su lugar semántico (H1, H2, párrafos, listas).
-
-### Cambiar colores
-En `styles.css`, modifica las variables al inicio del archivo:
+### Colores
+En `styles.css`, variables al inicio del archivo:
 ```css
 :root {
-  --navy:       #0F1F3D;
-  --blue:       #2E5FAC;
-  --off-white:  #F5F3EE;
-  /* ... */
+  --navy:      #0F1F3D;
+  --blue:      #2E5FAC;
+  --off-white: #F5F3EE;
 }
 ```
 
-### Agregar/quitar servicios
-Cada servicio es un `<article class="service-card">` en la sección `#servicios`. Copia uno existente y modifica el contenido.
+### Número de WhatsApp
+Busca `56983937954` en `index.html` y reemplaza.
+
+### Publicar cambios de código
+```bash
+git add .
+git commit -m "descripción del cambio"
+git push
+```
+GitHub Pages se actualiza en 1-2 minutos.
 
 ---
 
-## SEO implementado
+## Token de acceso GitHub
 
-- Meta title y description
-- Open Graph básico
-- HTML semántico (H1 único, H2 por sección, H3 por servicio)
-- JSON-LD para LegalService y FAQPage
-- Alt texts en imágenes/SVG
-- Anclas descriptivas
-- Chips de búsqueda para SEO local
+El workflow usa un token guardado como secret en el repo (`GH_TOKEN`). Expira en junio 2027. Cuando expire:
 
----
-
-## Notas
-
-- No usa frameworks ni dependencias externas (solo Google Fonts).
-- Es fully responsive (mobile, tablet, desktop).
-- Cumple accesibilidad básica: contraste, focus, aria, reduced-motion.
-- Los links de WhatsApp usan el formato `https://wa.me/56983937954?text=MENSAJE` con texto pre-codificado.
+1. Generar nuevo token en GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Scopes: `repo` + `workflow`
+3. Expiración: 1 año
+4. Ir al repo → Settings → Secrets and variables → Actions → `GH_TOKEN` → Update

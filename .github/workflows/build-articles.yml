@@ -1,10 +1,7 @@
 name: Publicar artículos desde Google Sheet
 
 on:
-  # Corre cuando se hace push a main
-  push:
-    branches: [main]
-  # Permite correrlo manualmente desde GitHub
+  # Solo corre cuando lo activas manualmente desde GitHub Actions
   workflow_dispatch:
 
 jobs:

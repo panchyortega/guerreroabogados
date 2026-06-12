@@ -20,7 +20,8 @@ import markdown as md_lib
 
 # ── Configuración ──────────────────────────────────────────────────────────────
 SHEET_ID   = os.environ.get("SHEET_ID", "1qsPSjlMgp7o_qV_vTWHg2vTHLeWnUIzaoo23P_eaDoc")
-SHEET_URL  = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=0"
+SHEET_URL_ARTICLES   = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=0"
+SHEET_URL_CATEGORIES = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=1"
 AYUDA_DIR  = os.path.join(os.path.dirname(__file__), "..", "ayuda")
 WA_NUMBER  = "56983937954"
 WA_DEFAULT = "Hola%2C%20quisiera%20realizar%20una%20consulta%20legal%20con%20Guerrero%20Abogados."
@@ -198,8 +199,8 @@ def build_article(article, cat_slug, cat_title, wa_msg):
 # ── Category index page generator ─────────────────────────────────────────────
 def build_category_index(cat_slug, cat_info, articles_by_subcat, wa_msg):
     cat_title = cat_info["title"]
-    icon = cat_info["icon"]
-    depth = 1  # ayuda/cat/index.html — CSS is at ../../ayuda/ayuda.css... wait, relative from cat/index.html it's ../ayuda.css
+    desc = cat_info.get("desc", "")
+    depth = 1
 
     # Build article list grouped by subcategory
     total = sum(len(v) for v in articles_by_subcat.values())
@@ -245,9 +246,8 @@ def build_category_index(cat_slug, cat_info, articles_by_subcat, wa_msg):
       <div class="cat-layout">
         <div class="cat-layout__main">
           <div class="cat-header">
-            <div class="cat-header__icon" aria-hidden="true">{icon}</div>
             <h1 class="cat-header__title">{cat_title}</h1>
-            <p class="cat-header__desc">{total} artículo{'s' if total != 1 else ''} en esta categoría.</p>
+            <p class="cat-header__desc">{desc}</p>
           </div>
           {articles_html}
         </div>
@@ -258,32 +258,86 @@ def build_category_index(cat_slug, cat_info, articles_by_subcat, wa_msg):
 </body>
 </html>"""
 
-def update_category_counts(by_cat):
-    """Update article count displayed on each cat-card in ayuda/index.html."""
+def update_category_counts(by_cat, active_categories=None):
+    """Update article count and descriptions on each cat-card in ayuda/index.html."""
+    if active_categories is None:
+        active_categories = CATEGORIES
     index_path = os.path.join(AYUDA_DIR, "index.html")
     if not os.path.exists(index_path):
         return
     html = open(index_path).read()
-    for cat_slug in CATEGORIES:
+    for cat_slug, cat_info in active_categories.items():
         total = sum(len(v) for v in by_cat.get(cat_slug, {}).values())
         label = f"{total} artículo{'s' if total != 1 else ''}"
-        # Replace count inside the card with data-cat matching this slug
+        title = cat_info.get("title", "")
+        desc = cat_info.get("desc", "")
+
+        # Update count
         html = re.sub(
             rf'(data-cat="{cat_slug}"[^>]*>.*?<span class="cat-card__count">)[^<]*(</span>)',
             rf'\g<1>{label}\g<2>',
             html, flags=re.DOTALL
         )
+        # Update title
+        if title:
+            html = re.sub(
+                rf'(data-cat="{cat_slug}"[^>]*>.*?<h3 class="cat-card__title">)[^<]*(</h3>)',
+                rf'\g<1>{title}\g<2>',
+                html, flags=re.DOTALL
+            )
+        # Update description
+        if desc:
+            html = re.sub(
+                rf'(data-cat="{cat_slug}"[^>]*>.*?<p class="cat-card__desc">)[^<]*(</p>)',
+                rf'\g<1>{desc}\g<2>',
+                html, flags=re.DOTALL
+            )
     open(index_path, "w").write(html)
-    print("  📊 Conteos de artículos actualizados en ayuda/index.html")
+    print("  📊 Cards de categorías actualizadas en ayuda/index.html")
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────
+def fetch_categories():
+    """Fetch categories from the second sheet tab. Falls back to CATEGORIES default."""
+    print("📥 Descargando categorías desde Sheet...")
+    resp = requests.get(SHEET_URL_CATEGORIES)
+    if resp.status_code != 200:
+        print("⚠️  No se pudo leer la pestaña Categorías, usando valores por defecto")
+        return None
+
+    # Load categories from sheet (or fall back to defaults)
+    dynamic_cats = fetch_categories()
+    active_categories = dynamic_cats if dynamic_cats else CATEGORIES
+
+    import csv, io
+    reader = csv.DictReader(io.StringIO(resp.text))
+    cats = {}
+    for row in reader:
+        row = {k.strip().lower(): v.strip() for k, v in row.items()}
+        slug = row.get("slug", "").lower().strip()
+        title = row.get("titulo", "").strip()
+        desc = row.get("descripcion", "").strip()
+        if not slug or not title:
+            continue
+        cats[slug] = {
+            "title": title,
+            "desc": desc,
+            "icon": CATEGORIES.get(slug, {}).get("icon", ""),
+        }
+    print(f"✅ {len(cats)} categorías cargadas desde Sheet")
+    return cats if cats else None
+
+
 def main():
     print("📥 Descargando Sheet...")
-    resp = requests.get(SHEET_URL)
+    resp = requests.get(SHEET_URL_ARTICLES)
     if resp.status_code != 200:
         print(f"❌ Error descargando Sheet: {resp.status_code}")
         sys.exit(1)
+
+    # Load categories from sheet (or fall back to defaults)
+    dynamic_cats = fetch_categories()
+    active_categories = dynamic_cats if dynamic_cats else CATEGORIES
 
     import csv, io
     reader = csv.DictReader(io.StringIO(resp.text))
@@ -315,7 +369,7 @@ def main():
 
     # Limpiar artículos anteriores
     print("🧹 Limpiando artículos anteriores...")
-    for cat_slug in CATEGORIES:
+    for cat_slug in active_categories:
         cat_dir = os.path.join(AYUDA_DIR, cat_slug)
         if not os.path.exists(cat_dir):
             continue
@@ -335,7 +389,7 @@ def main():
                 print(f"  🗑️  Eliminado: {cat_slug}/index.html")
 
     # Generate files — always generate index for ALL categories
-    for cat_slug, cat_info in CATEGORIES.items():
+    for cat_slug, cat_info in active_categories.items():
         cat_dir = os.path.join(AYUDA_DIR, cat_slug)
         os.makedirs(cat_dir, exist_ok=True)
         wa_msg = WA_DEFAULTS.get(cat_slug, WA_DEFAULT)
@@ -358,7 +412,7 @@ def main():
                 print(f"  📄 {cat_slug}/{art['slug']}.html")
 
     # Update article counts in ayuda/index.html
-    update_category_counts(by_cat)
+    update_category_counts(by_cat, active_categories)
 
     # Rebuild search index
     build_search_index(by_cat)

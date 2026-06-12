@@ -292,6 +292,27 @@ def main():
         subcat = art.get("subcategoria", "").strip()
         by_cat.setdefault(cat, {}).setdefault(subcat, []).append(art)
 
+    # Limpiar artículos anteriores
+    print("🧹 Limpiando artículos anteriores...")
+    for cat_slug in CATEGORIES:
+        cat_dir = os.path.join(AYUDA_DIR, cat_slug)
+        if not os.path.exists(cat_dir):
+            continue
+        new_slugs = set(["index.html"])
+        if cat_slug in by_cat:
+            for subcat_arts in by_cat[cat_slug].values():
+                for art in subcat_arts:
+                    new_slugs.add(art["slug"] + ".html")
+        for fname in os.listdir(cat_dir):
+            if fname.endswith(".html") and fname not in new_slugs:
+                os.remove(os.path.join(cat_dir, fname))
+                print(f"  🗑️  Eliminado: {cat_slug}/{fname}")
+        if cat_slug not in by_cat:
+            idx = os.path.join(cat_dir, "index.html")
+            if os.path.exists(idx):
+                os.remove(idx)
+                print(f"  🗑️  Eliminado: {cat_slug}/index.html")
+
     # Generate files
     for cat_slug, subcats in by_cat.items():
         cat_dir = os.path.join(AYUDA_DIR, cat_slug)
